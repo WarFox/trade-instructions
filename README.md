@@ -8,7 +8,7 @@ Input is assumed to be in memory.
 
 
 
-A sample trading instruction
+## A sample trading instruction
 
 | Entity | Buy/Sell | AgreedFx | Currency | InstructionDate | SettlementDate | Units | Price per unit |
 |--------|----------|----------|----------|-----------------|----------------|-------|----------------|
@@ -28,34 +28,52 @@ A sample trading instruction
 | bar    | B        |     0.22 | AED      | 05 Jan 2017     | 13 Jan 2017    |   450 |          150.5 |
 | foo    | S        |     0.22 | AED      | 05 Jan 2017     | 13 Jan 2017    |   450 |         102.75 |
 
-Sample output
+## Sample output
 
 Incoming settlement (Selling)
------------------------------
+
 2017-01-02 : $5,012.50
+
 2017-01-08 : $46,053.00
+
 2017-01-09 : $111,140.00
+
 2017-01-10 : $133,648.88
+
 2017-01-12 : $25,393.50
+
 2017-01-15 : $10,172.25
-============================
+
+---
+
 Outgoing settlement (Buying)
-----------------------------
+
 2017-01-02 : $10,025.00
+
 2017-01-08 : $29,799.00
+
 2017-01-11 : $14,899.50
+
 2017-01-15 : $14,899.50
-============================
+
+---
+
 Incoming rank (Selling)
------------------------
+
 thud
+
 bar
+
 foo
+
 grunt
-============================
+
+---
+
 Outgoing rank (Buying)
-----------------------
+
 bar
+
 foo
 
 
