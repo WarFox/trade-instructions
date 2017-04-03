@@ -61,6 +61,18 @@ public class SimpleAggregationServiceTest {
         assertThat(firstSettlements == secondSettlements).isTrue();
     }
 
+    @Test
+    public void testNoSettlementInTheWeekend() throws Exception {
+        SimpleAggregationService aggregatorService = new SimpleAggregationService(getWeekendSettlementInstructions());
+        List<Settlement> settlements = aggregatorService.getSettlements();
+        LocalDate friday = LocalDate.of(2017, 1, 6);
+        LocalDate saturday = LocalDate.of(2017, 1, 7);
+        LocalDate sunday = LocalDate.of(2017, 1, 8);
+        assertThat(settlements.stream().filter(s -> s.getDate().equals(friday)).count()).isZero();
+        assertThat(settlements.stream().filter(s -> s.getDate().equals(saturday) && "bar".equals(s.getEntity())).count()).isZero();
+        assertThat(settlements.stream().filter(s -> s.getDate().equals(sunday) && "grunt".equals(s.getEntity())).count()).isZero();
+    }
+
     private List<Instruction> getWeekdayInstructions() throws Exception {
         ArrayList<Instruction> instructions = new ArrayList<>();
         instructions.add(getInstruction("foo", TransactionType.B, BigDecimal.ONE, Currency.getInstance("AED"), LocalDate.of(2017, 1, 2), LocalDate.of(2017, 1, 3), 2, BigDecimal.ONE));
@@ -72,6 +84,18 @@ public class SimpleAggregationServiceTest {
         instructions.add(getInstruction("thud", TransactionType.S, BigDecimal.ONE, Currency.getInstance("AED"), LocalDate.of(2017, 1, 2), LocalDate.of(2017, 1, 3), 2, BigDecimal.ONE));
         instructions.add(getInstruction("foo", TransactionType.S, BigDecimal.ONE, Currency.getInstance("AED"), LocalDate.of(2017, 1, 2), LocalDate.of(2017, 1, 3), 2, BigDecimal.ONE));
         instructions.add(getInstruction("thud", TransactionType.S, BigDecimal.ONE, Currency.getInstance("AED"), LocalDate.of(2017, 1, 2), LocalDate.of(2017, 1, 3), 2, BigDecimal.ONE));
+        return instructions;
+    }
+
+    private List<Instruction> getWeekendSettlementInstructions() throws Exception {
+        ArrayList<Instruction> instructions = new ArrayList<>();
+        LocalDate friday = LocalDate.of(2017, 1, 6);
+        LocalDate saturday = LocalDate.of(2017, 1, 7);
+        LocalDate sunday = LocalDate.of(2017, 1, 8);
+        instructions.add(getInstruction("foo", TransactionType.B, BigDecimal.ONE, Currency.getInstance("AED"), LocalDate.of(2017, 1, 1), friday, 2, BigDecimal.ONE));
+        instructions.add(getInstruction("bar", TransactionType.B, BigDecimal.ONE, Currency.getInstance("SAR"), LocalDate.of(2017, 1, 2), saturday, 2, BigDecimal.ONE));
+        instructions.add(getInstruction("foo", TransactionType.B, BigDecimal.ONE, Currency.getInstance("GBP"), LocalDate.of(2017, 1, 2), saturday,  2, BigDecimal.ONE));
+        instructions.add(getInstruction("grunt", TransactionType.B, BigDecimal.ONE, Currency.getInstance("USD"), LocalDate.of(2017, 1, 2), sunday, 2, BigDecimal.ONE));
         return instructions;
     }
 

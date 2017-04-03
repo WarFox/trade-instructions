@@ -14,6 +14,7 @@ public class InstructionProcessor {
 
     public void incomingSettlement() {
         System.out.println("Incoming settlement (Selling)");
+        System.out.println("-----------------------------");
         aggregatorService.incomingByDate().entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .forEachOrdered(InstructionProcessor::printEntry);
@@ -21,6 +22,7 @@ public class InstructionProcessor {
 
     public void outgoingSettlement() {
         System.out.println("Outgoing settlement (Buying)");
+        System.out.println("----------------------------");
         aggregatorService.outgoingByDate().entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .forEachOrdered(InstructionProcessor::printEntry);
@@ -28,11 +30,13 @@ public class InstructionProcessor {
 
     public void incomingRank() {
         System.out.println("Incoming rank (Selling)");
+        System.out.println("-----------------------");
         aggregatorService.incomingRank().stream().forEachOrdered(System.out::println);
     }
 
     public void outgoingRank() {
         System.out.println("Outgoing rank (Buying)");
+        System.out.println("----------------------");
         aggregatorService.outgoingRank().stream().forEachOrdered(System.out::println);
     }
 
