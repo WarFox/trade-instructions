@@ -4,51 +4,80 @@ import org.junit.Test;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Currency;
+import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DateUtilsTest {
 
+    final static Currency GBP = Currency.getInstance(Locale.UK);
+    final static Currency AED = Currency.getInstance("AED");
+    final static Currency SAR = Currency.getInstance("SAR");
+
     @Test
     public void testMondayIsNotWeekEnd() throws Exception {
         LocalDate date = getDateByDay(DayOfWeek.MONDAY);
-        assertThat(DateUtils.isWeekEnd(date)).isFalse();
+        assertThat(DateUtils.isWeekEnd(date, GBP)).isFalse();
     }
 
     @Test
     public void testTuesdayIsNotWeekEnd() throws Exception {
         LocalDate date = getDateByDay(DayOfWeek.TUESDAY);
-        assertThat(DateUtils.isWeekEnd(date)).isFalse();
+        assertThat(DateUtils.isWeekEnd(date, GBP)).isFalse();
     }
 
     @Test
     public void testWednesdayIsNotWeekEnd() throws Exception {
         LocalDate date = getDateByDay(DayOfWeek.WEDNESDAY);
-        assertThat(DateUtils.isWeekEnd(date)).isFalse();
+        assertThat(DateUtils.isWeekEnd(date, GBP)).isFalse();
     }
 
     @Test
     public void testThursdayIsNotWeekEnd() throws Exception {
         LocalDate date = getDateByDay(DayOfWeek.THURSDAY);
-        assertThat(DateUtils.isWeekEnd(date)).isFalse();
+        assertThat(DateUtils.isWeekEnd(date, GBP)).isFalse();
     }
 
     @Test
     public void testFridayIsNotWeekEnd() throws Exception {
         LocalDate date = getDateByDay(DayOfWeek.FRIDAY);
-        assertThat(DateUtils.isWeekEnd(date)).isFalse();
+        assertThat(DateUtils.isWeekEnd(date, GBP)).isFalse();
     }
 
     @Test
     public void testSaturdayIsWeekEnd() throws Exception {
         LocalDate date = getDateByDay(DayOfWeek.SATURDAY);
-        assertThat(DateUtils.isWeekEnd(date)).isTrue();
+        assertThat(DateUtils.isWeekEnd(date, GBP)).isTrue();
     }
 
     @Test
     public void testSundayIsWeekEnd() throws Exception {
         LocalDate date = getDateByDay(DayOfWeek.SUNDAY);
-        assertThat(DateUtils.isWeekEnd(date)).isTrue();
+        assertThat(DateUtils.isWeekEnd(date, GBP)).isTrue();
+    }
+
+    @Test
+    public void testSundayIsNotWeekEndForAED() throws Exception {
+        LocalDate date = getDateByDay(DayOfWeek.SUNDAY);
+        assertThat(DateUtils.isWeekEnd(date, AED)).isFalse();
+    }
+
+    @Test
+    public void testSundayIsNotWeekEndForSAR() throws Exception {
+        LocalDate date = getDateByDay(DayOfWeek.SUNDAY);
+        assertThat(DateUtils.isWeekEnd(date, SAR)).isFalse();
+    }
+    @Test
+    public void testFridayIsWeekEndForAED() throws Exception {
+        LocalDate date = getDateByDay(DayOfWeek.FRIDAY);
+        assertThat(DateUtils.isWeekEnd(date, AED)).isTrue();
+    }
+
+    @Test
+    public void testFridayIsWeekEndForSAR() throws Exception {
+        LocalDate date = getDateByDay(DayOfWeek.FRIDAY);
+        assertThat(DateUtils.isWeekEnd(date, SAR)).isTrue();
     }
 
     @Test

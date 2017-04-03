@@ -1,10 +1,8 @@
 package models;
 
-import utils.CurrencyUtils;
 import utils.DateUtils;
 
 import java.math.BigDecimal;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Currency;
 
@@ -67,12 +65,8 @@ public class Instruction {
     }
 
     public LocalDate getAdjustedSettlementDate() {
-        DayOfWeek startOfWeek = DayOfWeek.MONDAY;
-        if (CurrencyUtils.isSundayStartCurrency(currency)) {
-            startOfWeek = DayOfWeek.SUNDAY;
-        }
-        if (DateUtils.isWeekEnd(settlementDate, startOfWeek)) {
-            return DateUtils.nextWorkingDay(settlementDate, startOfWeek);
+        if (DateUtils.isWeekEnd(settlementDate, currency)) {
+            return DateUtils.nextWorkingDay(settlementDate, currency);
         }
         return settlementDate;
     }

@@ -1,4 +1,4 @@
-import services.SimpleAggregationService;
+import services.AggregationService;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -6,9 +6,9 @@ import java.util.Map;
 
 public class InstructionProcessor {
 
-    private final SimpleAggregationService aggregatorService;
+    private final AggregationService aggregatorService;
 
-    public InstructionProcessor(SimpleAggregationService aggregatorService) {
+    public InstructionProcessor(AggregationService aggregatorService) {
         this.aggregatorService = aggregatorService;
     }
 

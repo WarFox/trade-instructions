@@ -53,7 +53,15 @@ public class SimpleAggregationServiceTest {
         assertThat(entitiesOutgoingRank).containsExactly("foo", "grunt", "bar");
     }
 
-    public List<Instruction> getWeekdayInstructions() throws Exception {
+    @Test
+    public void testGetSettlementDoesLazyCalculation() throws Exception {
+        SimpleAggregationService aggregatorService = new SimpleAggregationService(getWeekdayInstructions());
+        List<Settlement> firstSettlements = aggregatorService.getSettlements();
+        List<Settlement> secondSettlements = aggregatorService.getSettlements();
+        assertThat(firstSettlements == secondSettlements).isTrue();
+    }
+
+    private List<Instruction> getWeekdayInstructions() throws Exception {
         ArrayList<Instruction> instructions = new ArrayList<>();
         instructions.add(getInstruction("foo", TransactionType.B, BigDecimal.ONE, Currency.getInstance("AED"), LocalDate.of(2017, 1, 2), LocalDate.of(2017, 1, 3), 2, BigDecimal.ONE));
         instructions.add(getInstruction("bar", TransactionType.B, BigDecimal.ONE, Currency.getInstance("AED"), LocalDate.of(2017, 1, 2), LocalDate.of(2017, 1, 3), 2, BigDecimal.ONE));

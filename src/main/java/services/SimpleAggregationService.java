@@ -51,6 +51,7 @@ public class SimpleAggregationService implements AggregationService {
 
     /**
      * Settlements is lazy initialized for optimization
+     *
      * @return List of settlements
      */
     public List<Settlement> getSettlements() {

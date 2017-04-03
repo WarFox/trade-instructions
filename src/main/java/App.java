@@ -1,5 +1,6 @@
 import models.Instruction;
 import models.TransactionType;
+import services.AggregationService;
 import services.SimpleAggregationService;
 
 import java.math.BigDecimal;
@@ -12,7 +13,7 @@ public class App {
 
     public static void main(String[] args) {
         final List<Instruction> instructions = new App().getInstructions();
-        final SimpleAggregationService aggregatorService = new SimpleAggregationService(instructions);
+        final AggregationService aggregatorService = new SimpleAggregationService(instructions);
         final InstructionProcessor instructionProcessor = new InstructionProcessor(aggregatorService);
         instructionProcessor.incomingSettlement();
         instructionProcessor.outgoingSettlement();
